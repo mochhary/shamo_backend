@@ -59,14 +59,14 @@ class User extends Authenticatable
         return $this->hasMany(Transaction::class, 'users_id', 'id');
     }
 
-        // ✅ Tambahkan method ini di sini!
-        public function getProfilePhotoUrlAttribute()
-        {
-            return $this->profile_photo_path
-                ? url('storage/' . $this->profile_photo_path)
-                : "https://ui-avatars.com/api/?name=" . urlencode($this->name) . "&color=7F9CF5&background=EBF4FF";
-        }
-
+    public function getProfilePhotoUrlAttribute()
+    {
+        $initials = strtoupper(substr($this->name, 0, 1)); // Ambil huruf pertama saja
+        return $this->profile_photo_path
+            ? url('storage/' . $this->profile_photo_path)
+            : "https://ui-avatars.com/api/?name=" . $initials . "&color=7F9CF5&background=EBF4FF";
+    }
+    
     /**
      * Get the attributes that should be cast.
      *
